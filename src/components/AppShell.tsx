@@ -1,11 +1,13 @@
 // ─────────────────────────────────────────────
-// AppShell — sidebar + topbar layout wrapper
+// AppShell v2 — sidebar azul/navy con todos los
+// módulos de las referencias (Legal OS, Wealth OS,
+// Business OS, Celebrations OS, Viajes, Black, AI)
 // ─────────────────────────────────────────────
 import { NavLink, Outlet, useNavigate } from 'react-router-dom'
 import {
   LayoutDashboard, RefreshCw, FolderOpen, Heart, Building,
-  Activity, Scale, TrendingUp, Briefcase, Star, Crown,
-  Sparkles, LogOut, Bell, Settings,
+  Users, Plane, Activity, Scale, TrendingUp, Briefcase,
+  PartyPopper, Sparkles, LogOut, Bell, Settings, Crown,
 } from 'lucide-react'
 import { useAuth } from '../hooks/useAuth'
 
@@ -13,184 +15,144 @@ interface NavItem {
   to: string
   label: string
   icon: React.ReactNode
-  color?: string
   badge?: number
   badgeColor?: string
 }
 
-const NAV_SECTIONS: Array<{ title: string; items: NavItem[] }> = [
-  {
-    title: 'Principal',
-    items: [
-      { to: '/app/dashboard', label: 'Dashboard', icon: <LayoutDashboard size={16} /> },
-      { to: '/app/tracker', label: 'Mis Trámites', icon: <RefreshCw size={16} />, badge: 7 },
-      { to: '/app/documents', label: 'Documentos', icon: <FolderOpen size={16} />, badge: 3, badgeColor: '#D97706' },
-    ],
-  },
-  {
-    title: 'Life OS',
-    items: [
-      { to: '/app/family',       label: 'Family OS',       icon: <Heart size={16} />,       color: '#E11D48' },
-      { to: '/app/property',     label: 'Property OS',     icon: <Building size={16} />,    color: '#D97706' },
-      { to: '/app/health',       label: 'Health OS',       icon: <Activity size={16} />,    color: '#0891B2' },
-      { to: '/app/legal',        label: 'Legal OS',        icon: <Scale size={16} />,       color: '#7C3AED' },
-      { to: '/app/wealth',       label: 'Wealth OS',       icon: <TrendingUp size={16} />,  color: '#047857' },
-      { to: '/app/business',     label: 'Business OS',     icon: <Briefcase size={16} />,   color: '#1D4ED8' },
-      { to: '/app/celebrations', label: 'Celebrations OS', icon: <Star size={16} />,        color: '#A21CAF' },
-    ],
-  },
-  {
-    title: 'Premium',
-    items: [
-      { to: '/app/black', label: 'TramiGo Black', icon: <Crown size={16} />, color: '#C9A84C' },
-      { to: '/app/ai',    label: 'TramiGo AI',    icon: <Sparkles size={16} />, color: '#7C3AED' },
-    ],
-  },
+const NAV_PLATAFORMA: NavItem[] = [
+  { to: '/app/dashboard', label: 'Dashboard', icon: <LayoutDashboard size={17} /> },
+  { to: '/app/tracker',   label: 'Trámites',  icon: <RefreshCw size={17} />, badge: 7 },
+  { to: '/app/tracker',   label: 'Tracker',   icon: <Activity size={17} /> },
+  { to: '/app/documents', label: 'Bóveda',    icon: <FolderOpen size={17} />, badge: 3, badgeColor: '#F59E0B' },
+  { to: '/app/family',    label: 'Family OS', icon: <Users size={17} /> },
+  { to: '/app/property',  label: 'Viajes',    icon: <Plane size={17} /> },
+  { to: '/app/property',  label: 'Property OS', icon: <Building size={17} /> },
+  { to: '/app/health',    label: 'Salud',     icon: <Heart size={17} /> },
+]
+
+const NAV_OS: NavItem[] = [
+  { to: '/app/health',       label: 'Adultos Mayores', icon: <Heart size={17} /> },
+  { to: '/app/business',     label: 'Banca',           icon: <Briefcase size={17} /> },
+  { to: '/app/legal',        label: 'Legal OS',        icon: <Scale size={17} /> },
+  { to: '/app/wealth',       label: 'Wealth OS',       icon: <TrendingUp size={17} /> },
+  { to: '/app/business',     label: 'Business OS',     icon: <Briefcase size={17} /> },
+  { to: '/app/celebrations', label: 'Celebrations OS', icon: <PartyPopper size={17} /> },
 ]
 
 export default function AppShell() {
   const { logout, authUser } = useAuth()
   const navigate = useNavigate()
 
-  const handleLogout = () => {
-    logout()
-    navigate('/')
-  }
+  const handleLogout = () => { logout(); navigate('/') }
 
   return (
-    <div className="flex h-screen overflow-hidden">
-      {/* SIDEBAR */}
-      <aside className="w-60 flex-shrink-0 flex flex-col overflow-y-auto"
-        style={{ background: '#070B1A' }}>
+    <div className="flex h-screen overflow-hidden" style={{ background: '#F4F6FB' }}>
+      {/* SIDEBAR — azul/navy degradado */}
+      <aside className="w-64 flex-shrink-0 flex flex-col overflow-y-auto"
+        style={{ background: 'linear-gradient(180deg,#0B1530,#0D1B3A)' }}>
 
-        {/* Logo + user */}
-        <div className="p-4 border-b border-white/[0.06]">
-          <div className="flex items-center gap-2 mb-4">
-            <div className="w-8 h-8 rounded-lg flex items-center justify-center
-              text-sm font-extrabold text-white font-syne"
-              style={{ background: 'linear-gradient(135deg,#1A56DB,#3B82F6)' }}>T</div>
-            <span className="font-syne font-extrabold text-white text-base tracking-tight">
-              Trami<span className="text-blue-400">Go</span>
-            </span>
-          </div>
+        {/* Logo */}
+        <div className="px-4 py-4 border-b border-white/[0.07]">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full flex items-center justify-center
-              text-xs font-bold text-white flex-shrink-0"
-              style={{ background: 'linear-gradient(135deg,#1A56DB,#7C3AED)' }}>
-              {authUser?.name?.charAt(0) ?? 'A'}
-            </div>
-            <div>
-              <div className="text-xs font-bold text-white leading-none mb-1">
-                {authUser?.name ?? 'Usuario'}
-              </div>
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full"
-                style={{ background: 'rgba(201,168,76,0.15)', color: '#E8C96A' }}>
-                ★ {authUser?.plan ?? 'premium'}
-              </span>
-            </div>
-          </div>
-          <div className="flex items-center gap-1.5 mt-2 text-[10px] text-green-400 font-semibold">
-            <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse-dot" />
-            María Vargas en línea
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center font-syne font-extrabold text-white"
+              style={{ background: '#2563EB' }}>T</div>
+            <span className="font-syne font-extrabold text-white text-lg tracking-tight">TramiGo</span>
           </div>
         </div>
 
-        {/* Navigation */}
-        <nav className="flex-1 p-3">
-          {NAV_SECTIONS.map(sec => (
-            <div key={sec.title} className="mb-2">
-              <div className="text-[9px] font-bold uppercase tracking-widest px-2 py-2"
-                style={{ color: 'rgba(255,255,255,0.2)' }}>
-                {sec.title}
-              </div>
-              {sec.items.map(item => (
-                <NavLink
-                  key={item.to}
-                  to={item.to}
-                  className={({ isActive }) =>
-                    `flex items-center gap-2.5 px-3 py-2 rounded-lg mb-0.5 text-xs font-medium
-                    transition-all duration-150 relative
-                    ${isActive
-                      ? 'text-white font-semibold'
-                      : 'text-white/50 hover:text-white/80 hover:bg-white/[0.05]'
-                    }`
-                  }
-                  style={({ isActive }) => isActive ? {
-                    background: item.color ? `${item.color}22` : 'rgba(26,86,219,0.2)',
-                  } : {}}
-                >
-                  {({ isActive }) => (
-                    <>
-                      {isActive && (
-                        <div className="absolute left-0 top-1 bottom-1 w-0.5 rounded-r"
-                          style={{ background: item.color ?? '#1A56DB' }} />
-                      )}
-                      <span style={{ color: isActive ? (item.color ?? '#60A5FA') : undefined }}>
-                        {item.icon}
-                      </span>
-                      <span className="flex-1">{item.label}</span>
-                      {item.badge && (
-                        <span className="min-w-[18px] h-[18px] rounded-full flex items-center
-                          justify-center text-[9px] font-bold px-1 text-white"
-                          style={{ background: item.badgeColor ?? '#1A56DB' }}>
-                          {item.badge}
-                        </span>
-                      )}
-                    </>
-                  )}
-                </NavLink>
-              ))}
-            </div>
+        {/* User */}
+        <div className="px-4 py-3 flex items-center gap-2.5 border-b border-white/[0.06]">
+          <div className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold text-white flex-shrink-0"
+            style={{ background: '#2563EB' }}>
+            {authUser?.name?.split(' ').map(w => w[0]).join('').slice(0, 2) ?? 'JD'}
+          </div>
+          <div>
+            <div className="text-sm font-bold text-white leading-tight">{authUser?.name ?? 'Usuario'}</div>
+            <div className="text-[11px] text-white/40">Cuenta {authUser?.plan ?? 'premium'}</div>
+          </div>
+        </div>
+
+        {/* Nav */}
+        <nav className="flex-1 px-3 py-3">
+          <div className="text-[10px] font-bold uppercase tracking-widest px-2 py-2" style={{ color: 'rgba(255,255,255,0.25)' }}>
+            Plataforma
+          </div>
+          {NAV_PLATAFORMA.map((item, i) => (
+            <NavLink key={item.label + i} to={item.to} end={item.to === '/app/dashboard'}
+              className={({ isActive }) =>
+                `flex items-center gap-3 px-3 py-2.5 rounded-lg mb-1 text-sm font-medium transition-all
+                ${isActive ? 'text-white' : 'text-white/55 hover:text-white/85 hover:bg-white/[0.06]'}`
+              }
+              style={({ isActive }) => isActive ? { background: '#2563EB' } : {}}>
+              {item.icon}
+              <span className="flex-1">{item.label}</span>
+              {item.badge && (
+                <span className="min-w-[18px] h-[18px] rounded-full flex items-center justify-center text-[9px] font-bold text-white px-1"
+                  style={{ background: item.badgeColor ?? '#EF4444' }}>{item.badge}</span>
+              )}
+            </NavLink>
+          ))}
+
+          <div className="text-[10px] font-bold uppercase tracking-widest px-2 py-2 mt-3" style={{ color: 'rgba(255,255,255,0.25)' }}>
+            Más módulos
+          </div>
+          {NAV_OS.map((item, i) => (
+            <NavLink key={item.label + i} to={item.to}
+              className={({ isActive }) =>
+                `flex items-center gap-3 px-3 py-2.5 rounded-lg mb-1 text-sm font-medium transition-all
+                ${isActive ? 'text-white' : 'text-white/55 hover:text-white/85 hover:bg-white/[0.06]'}`
+              }
+              style={({ isActive }) => isActive ? { background: '#2563EB' } : {}}>
+              {item.icon}
+              <span className="flex-1">{item.label}</span>
+            </NavLink>
           ))}
         </nav>
 
-        {/* AI Widget */}
-        <NavLink to="/app/ai"
-          className="mx-3 mb-2 p-3 rounded-xl cursor-pointer"
-          style={{ background: 'rgba(26,86,219,0.15)', border: '1px solid rgba(26,86,219,0.25)' }}>
-          <div className="text-[10px] font-bold text-blue-400 mb-0.5 flex items-center gap-1">
-            <Sparkles size={10} /> TramiGo AI
-          </div>
-          <div className="text-[10px] text-white/30">¿En qué puedo ayudarte?</div>
+        {/* TramiGo AI widget */}
+        <NavLink to="/app/ai" className="mx-3 mb-2 p-3 rounded-xl flex items-center gap-2"
+          style={{ background: 'rgba(37,99,235,0.18)', border: '1px solid rgba(37,99,235,0.3)' }}>
+          <Sparkles size={15} className="text-blue-300" />
+          <span className="text-xs font-bold text-white">TramiGo AI</span>
         </NavLink>
 
-        {/* Logout */}
+        {/* Black banner */}
+        <NavLink to="/app/black" className="mx-3 mb-3 p-3 rounded-xl block"
+          style={{ background: 'linear-gradient(135deg,#C9A84C20,#E8C96A10)', border: '1px solid rgba(201,168,76,0.3)' }}>
+          <div className="flex items-center gap-1.5 mb-1">
+            <Crown size={13} style={{ color: '#E8C96A' }} />
+            <span className="text-xs font-bold" style={{ color: '#E8C96A' }}>TramiGo Black</span>
+          </div>
+          <p className="text-[10px] text-white/40">Oficina privada premium con asesor dedicado 24/7</p>
+        </NavLink>
+
         <button onClick={handleLogout}
-          className="flex items-center gap-2 mx-3 mb-4 px-3 py-2 rounded-lg
-          text-xs text-white/40 hover:text-white/70 hover:bg-white/[0.05] transition-all">
-          <LogOut size={14} /> Cerrar sesión
+          className="flex items-center gap-2 mx-3 mb-4 px-3 py-2 rounded-lg text-xs text-white/35 hover:text-white/70 transition-all">
+          <LogOut size={13} /> Cerrar sesión
         </button>
       </aside>
 
       {/* MAIN */}
       <div className="flex-1 flex flex-col overflow-hidden">
-        {/* Topbar */}
-        <header className="h-13 bg-white border-b border-[#E8ECF0] flex items-center
-          justify-between px-7 flex-shrink-0" style={{ height: 52 }}>
-          <span className="text-sm font-bold text-[#0D1B2A]">
-            Centro de Control Colombia
-          </span>
+        <header className="h-14 bg-white border-b flex items-center justify-between px-7 flex-shrink-0"
+          style={{ borderColor: '#E8ECF0' }}>
+          <span className="text-sm font-bold" style={{ color: '#0D1B2A' }}>Centro de Control Colombia</span>
           <div className="flex items-center gap-2">
-            <NavLink to="/app/ai"
-              className="w-8 h-8 rounded-lg flex items-center justify-center
-              text-[#6B7280] hover:text-[#0D1B2A] transition-colors"
-              style={{ background: '#F4F6FB', border: '1px solid #E8ECF0' }}>
-              <Sparkles size={15} />
+            <NavLink to="/app/ai" className="w-9 h-9 rounded-lg flex items-center justify-center"
+              style={{ background: '#F4F6FB', border: '1px solid #E8ECF0', color: '#6B7280' }}>
+              <Sparkles size={16} />
             </NavLink>
-            <div className="relative w-8 h-8 rounded-lg flex items-center justify-center
-              text-[#6B7280]" style={{ background: '#F4F6FB', border: '1px solid #E8ECF0' }}>
-              <Bell size={15} />
-              <span className="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 rounded-full
-                flex items-center justify-center text-[8px] font-bold text-white bg-[#1A56DB]">4</span>
+            <div className="relative w-9 h-9 rounded-lg flex items-center justify-center"
+              style={{ background: '#F4F6FB', border: '1px solid #E8ECF0', color: '#6B7280' }}>
+              <Bell size={16} />
+              <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-blue-600 text-white text-[9px] font-bold flex items-center justify-center">3</span>
             </div>
-            <div className="w-8 h-8 rounded-lg flex items-center justify-center
-              text-[#6B7280]" style={{ background: '#F4F6FB', border: '1px solid #E8ECF0' }}>
-              <Settings size={15} />
+            <div className="w-9 h-9 rounded-lg flex items-center justify-center"
+              style={{ background: '#F4F6FB', border: '1px solid #E8ECF0', color: '#6B7280' }}>
+              <Settings size={16} />
             </div>
           </div>
         </header>
-
-        {/* Page content */}
         <main className="flex-1 overflow-y-auto p-7" style={{ background: '#F4F6FB' }}>
           <Outlet />
         </main>
