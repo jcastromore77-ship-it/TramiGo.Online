@@ -1,29 +1,30 @@
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Manrope:wght@300;400;500;600;700;800&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --navy: #070B1A;
-  --blue: #1A56DB;
-  --green: #059669;
+  --navy: #060A18;
+  --navy2: #0A1228;
+  --blue: #2563EB;
+  --green: #00D67A;
   --gold: #C9A84C;
-  --border: #E8ECF0;
-  --bg: #F4F6FB;
+  --border: #E5E8EE;
+  --bg: #F7F8FB;
 }
 
 * { box-sizing: border-box; }
-body { font-family: 'Inter', sans-serif; background: var(--bg); color: #0D1B2A; margin: 0; }
-.font-syne { font-family: 'Syne', sans-serif; }
+body { font-family: 'Manrope', sans-serif; background: var(--bg); color: #0A0E1A; margin: 0; }
+.font-display { font-family: 'Space Grotesk', sans-serif; }
 
-@keyframes pulse-dot {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(0.7); }
-}
-@keyframes count-up { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes slide-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes ring-fill { from { stroke-dashoffset: 264; } to { stroke-dashoffset: 80; } }
+@keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.7)} }
+@keyframes slide-in { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+@keyframes ring-fill { from{stroke-dashoffset:339} to{stroke-dashoffset:var(--target,80)} }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+@keyframes shimmer { 0%{background-position:-468px 0} 100%{background-position:468px 0} }
+@keyframes count-up { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
 
 .animate-pulse-dot { animation: pulse-dot 1.8s ease-in-out infinite; }
-.animate-slide-in { animation: slide-in 0.4s ease-out forwards; }
-.animate-ring { animation: ring-fill 1.2s ease-out forwards; }
+.animate-slide-in { animation: slide-in 0.5s cubic-bezier(0.16,1,0.3,1) forwards; }
+.animate-ring { animation: ring-fill 1.4s cubic-bezier(0.16,1,0.3,1) forwards; }
+.animate-float { animation: float 4s ease-in-out infinite; }
