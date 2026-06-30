@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --navy: #070B1A;
+  --blue: #1A56DB;
+  --green: #059669;
+  --gold: #C9A84C;
+  --border: #E8ECF0;
+  --bg: #F4F6FB;
+}
+
+* { box-sizing: border-box; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: #0D1B2A; margin: 0; }
+.font-syne { font-family: 'Syne', sans-serif; }
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.7); }
+}
+@keyframes count-up { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slide-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes ring-fill { from { stroke-dashoffset: 264; } to { stroke-dashoffset: 80; } }
+
+.animate-pulse-dot { animation: pulse-dot 1.8s ease-in-out infinite; }
+.animate-slide-in { animation: slide-in 0.4s ease-out forwards; }
+.animate-ring { animation: ring-fill 1.2s ease-out forwards; }
